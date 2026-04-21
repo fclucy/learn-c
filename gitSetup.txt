@@ -1,0 +1,52 @@
+# The most common place for personal development on Linux is to make a home directory called ~/dev or ~/repos, make that first.
+
+# Generate an SSH key and upload it to Github so you can create a repo online and then clone it down to your box, along with Git install and initial configuration:
+# apt update
+# apt install git
+# git --version
+# git config --global user.name "Finnian Lucy"
+# git config --global user.email "finnianlucy@student.olympic.edu"
+# git config --list
+# ssh-keygen -t ed25519 -C "finnianlucy@student.olympic.edu"
+# cat id_ed25519.pub
+# Copy the key into the SSH keys for Github online.
+
+# Use the git clone command to pull down the newly created repository, example: git clone git@github.com:fclucy/learn-c.git
+# Make files in the new repository
+# git init
+# git add .
+
+# Now you need to make a GPG key so that when you make commits, they are signed and verified for integrity.
+# gpg --full-generate-key
+# Choose the default RSA (4096-bit) options
+# In general, GPG keys for personal development should expire every 2 years.
+# gpg --list-secret-keys --keyid-format=long
+# For this part, you want the sec portion of the output:
+# sec   rsa4096/7AC45896E1F7E63F 2026-04-21 [SC] [expires: 2028-04-20]
+#      F483358DBD2E8731239E58A37AC45896E1F7E63F
+# And the specific part that is the key ID:
+# 7AC45896E1F7E63F
+# Once you have the key ID, do these commands:
+# git config --global user.signingkey 7AC45896E1F7E63F
+# git config --global commit.gpgsign true
+# gpg --armor --export 7AC45896E1F7E63F
+# Make sure to copy the entire block including the start and closing texts:
+# -----BEGIN PGP PUBLIC KEY BLOCK-----
+# -----END PGP PUBLIC KEY BLOCK-----
+# Add the GPG key to Github and you should be ready to go for signed and verified commits.
+# In general, professional commits on Github follow a simple structure:
+# Subject: body
+# Subject: ticket number
+# Keep the subject below 50 characters and the body below 80 characters, though subject is usually just a single world like Fix or Informational.
+# Avoid periods altogether for commits
+# Example commits-
+# Fix: JIRA-1213
+# Informational: New file
+
+# Now that the Git repository is created on Github, it was cloned down to your box, you made some files, added, and committed them, then setup GPG keys, now it is time to make the commits and push those changes to online repo:
+# git commit -m "Informational: Hello World in C"
+# git branch -M main
+# The initial commit will be this:
+# git push -u origin main
+# Subsequent pushes can be simply done with:
+# git push
